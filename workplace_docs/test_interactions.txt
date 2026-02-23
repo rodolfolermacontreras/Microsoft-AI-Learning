@@ -1,0 +1,139 @@
+# Test Interactions for Workplace Documentation Tool
+# Copy and paste these one at a time when prompted with "add"
+# These are example patterns - replace with real conversations
+
+================================================================================
+TEST 1: Unclear Expectations Example
+================================================================================
+
+[Teams Chat - January 15, 2026]
+
+Manager: Hey, I need you to work on that data project
+You: Sure, which one specifically? We have the sales dashboard and the customer churn model
+Manager: You know, the important one
+You: Can you clarify? I want to make sure I prioritize correctly
+Manager: The one stakeholders are asking about. Use your judgment
+You: Ok, I'll start with the churn model since that was discussed last week
+Manager: No not that one. The other one
+You: The sales dashboard then?
+Manager: Just get it done by EOD tomorrow
+
+================================================================================
+TEST 2: Shifting Priorities Example
+================================================================================
+
+[Teams Chat - January 20, 2026]
+
+Manager: Drop everything. We need the Q4 report now
+You: I'm currently working on the customer segmentation you asked for Monday
+Manager: That can wait. Q4 report is urgent
+You: Ok, I'll switch. When do you need Q4?
+Manager: ASAP
+[4 hours later]
+Manager: Where's the segmentation analysis? Leadership is asking
+You: You said to drop it for Q4 report
+Manager: I said Q4 was urgent, not to stop segmentation. You need to manage your time better
+You: I have the chat where you said "drop everything"
+Manager: I didn't mean literally everything. Use common sense
+
+================================================================================
+TEST 3: Gaslighting Example
+================================================================================
+
+[Teams Chat - January 22, 2026]
+
+Manager: Why wasn't the model deployed yesterday?
+You: We agreed on Friday deployment during our Monday standup
+Manager: I never said Friday. I said Thursday
+You: I have it in my notes from the meeting
+Manager: Your notes are wrong. I clearly said Thursday
+You: Should I pull up the meeting recording?
+Manager: That's not the point. The point is you should have clarified if you were unsure
+You: I wasn't unsure, I wrote down Friday because that's what was said
+Manager: This is why we have communication problems on this team
+
+================================================================================
+TEST 4: Pressure Tactics Example  
+================================================================================
+
+[Teams Chat - January 25, 2026]
+
+Manager: I need the full ML pipeline rebuilt by Monday
+You: That's a 2-3 week project minimum. We'd need to retrain models, validate, test
+Manager: Other teams do this in days
+You: Which teams? I'd like to understand their approach
+Manager: That's not relevant. I need to know if you can deliver or not
+You: I can deliver quality work in 2-3 weeks, or a rushed version with risks
+Manager: Sounds like you're not committed. Should I find someone else?
+You: I'm committed to doing it right. Rushing ML pipelines causes production issues
+Manager: Let me know by EOD if you can make Monday work
+
+================================================================================
+TEST 5: No Accountability Example
+================================================================================
+
+[Teams Chat - January 27, 2026]
+
+Manager: The stakeholder presentation had wrong numbers
+You: I used the data from the source you specified
+Manager: You should have validated it
+You: I asked you to review before sending and you approved it
+Manager: I don't have time to check every number. That's your job
+You: The approval email has your signoff
+Manager: My signoff means format was ok, not that I verified the data
+You: That wasn't communicated. What's the review process then?
+Manager: You should know this by now
+
+================================================================================
+TEST 6: Contradicting Requests Example
+================================================================================
+
+[Email Thread - January 28, 2026]
+
+From: Manager
+Subject: Dashboard Priority
+
+Focus on accuracy over speed. Take your time to get it right.
+
+---
+
+[Teams Chat - Same Day, 3pm]
+
+Manager: Why isn't the dashboard done yet?
+You: You said to focus on accuracy over speed
+Manager: Yes but that doesn't mean take forever
+You: It's been 4 hours. The email was this morning
+Manager: A good analyst would have finished by now
+You: What's the expected turnaround for accuracy-focused work?
+Manager: Use your judgment. That's why we hired you
+
+================================================================================
+TEST 7: Blame Shifting Example
+================================================================================
+
+[Teams Chat - January 29, 2026]
+
+Manager: Why did the automated report fail?
+You: The cron job server was down. IT confirmed infrastructure issue
+Manager: You should have had a backup plan
+You: I proposed a backup system 3 months ago, it wasn't approved due to budget
+Manager: That's a separate issue. Right now you need to own the failure
+You: The root cause is infrastructure, not my code
+Manager: Leadership doesn't want to hear excuses. Fix it and send an apology
+You: Apology for an IT outage I flagged as a risk?
+Manager: For the customer impact. Own it
+
+================================================================================
+INSTRUCTIONS FOR TESTING
+================================================================================
+
+1. Run: python doc_tool.py
+2. Type: add
+3. Copy one of the conversations above (everything between the ===== lines)
+4. Paste it when prompted
+5. Follow the prompts to add date, people, categories
+6. Type: timeline  - to see your documented incidents
+7. Type: graph - to see relationship/pattern analysis
+8. Type: export - to get JSON for HR or legal
+
+Try all 7 examples to see how the tool categorizes and connects patterns!

@@ -1,0 +1,6 @@
+# Kusto Assistant Dependencies
+github-copilot-sdk
+azure-kusto-data
+azure-identity
+pandas
+pydantic>=2.0
