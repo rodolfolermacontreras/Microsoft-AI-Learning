@@ -38,10 +38,17 @@ Microsoft-AI-Learning/
 |   +-- KUSTO_SCHEMA_GUIDE.md  # Schema configuration guide
 |
 +-- workplace_docs/            # Workplace Documentation Tool
-    |-- README.md              # Quick start, setup, features
-    |-- app.py                 # Unified web application
-    |-- START.bat              # One-click launcher
-    +-- requirements.txt       # Dependencies
+|   |-- README.md              # Quick start, setup, features
+|   |-- app.py                 # Unified web application
+|   |-- START.bat              # One-click launcher
+|   +-- requirements.txt       # Dependencies
+|
++-- communication_microsoft/   # Microsoft Comms Guidance and Frameworks
+    |-- README.md              # Overview, structure, data scientist lens
+    |-- comms_principles.md    # EEO guiding principles and platform usage
+    |-- before_you_send_checklist.md  # Pre-send/publish/present checklist
+    |-- meeting_map_framework.md      # Meeting Map template (from PDF)
+    +-- EEO Meeting Map.pdf    # Original PDF artifact from EEO
 ```
 
 ### Reference Repos (cloned, gitignored)
@@ -82,6 +89,7 @@ Before doing any work, read [RULES.md](RULES.md). It contains the development st
 | Microsoft Agent Framework | `microsoft-agent-framework/` | In progress -- notes, examples, comparisons |
 | Kusto Query Assistant | `kusto_app/` | Built -- blocked by Azure auth |
 | Workplace Documentation | `workplace_docs/` | Built -- async event loop issue on AI features |
+| Communication at Microsoft | `communication_microsoft/` | Foundation -- EEO comms guidance, meeting frameworks |
 
 ## Learning Path
 
@@ -90,6 +98,7 @@ Before doing any work, read [RULES.md](RULES.md). It contains the development st
 2. Agent Framework       -- Learn Microsoft's unified agent platform (SK + AutoGen successor)
 3. Kusto App             -- Apply agents to real data work (Azure Data Explorer)
 4. Workplace Docs        -- Full-stack app with AI analysis, knowledge graphs
+5. Communication         -- Microsoft comms frameworks for data scientists
 ```
 
 ## Technology Stack
