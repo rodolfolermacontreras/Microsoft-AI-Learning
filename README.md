@@ -44,11 +44,15 @@ Microsoft-AI-Learning/
 |   +-- requirements.txt       # Dependencies
 |
 +-- communication_microsoft/   # Microsoft Comms Guidance and Frameworks
-    |-- README.md              # Overview, structure, data scientist lens
-    |-- comms_principles.md    # EEO guiding principles and platform usage
-    |-- before_you_send_checklist.md  # Pre-send/publish/present checklist
-    |-- meeting_map_framework.md      # Meeting Map template (from PDF)
-    +-- EEO Meeting Map.pdf    # Original PDF artifact from EEO
+|   |-- README.md              # Overview, structure, data scientist lens
+|   |-- comms_principles.md    # EEO guiding principles and platform usage
+|   |-- before_you_send_checklist.md  # Pre-send/publish/present checklist
+|   |-- meeting_map_framework.md      # Meeting Map template (from PDF)
+|   +-- EEO Meeting Map.pdf    # Original PDF artifact from EEO
+|
++-- polyclaw/                  # Autonomous AI Copilot (Copilot SDK agent)
+    |-- README.md              # Architecture, subsystems, learning objectives
+    +-- polyclaw-repo/         # Cloned source (gitignored)
 ```
 
 ### Reference Repos (cloned, gitignored)
@@ -59,6 +63,7 @@ These are cloned reference repositories. They are excluded from this repo's git 
 |--------|--------|---------|
 | `copilot-sdk/` | [github/copilot-sdk](https://github.com/github/copilot-sdk) | Official SDK source code |
 | `claude-code-best-practice/` | [anthropics/claude-code-best-practice](https://github.com/anthropics/claude-code-best-practice) | Claude agent patterns reference |
+| `polyclaw/polyclaw-repo/` | [aymenfurter/polyclaw](https://github.com/aymenfurter/polyclaw) | Autonomous AI Copilot built on Copilot SDK |
 
 ## Getting Started
 
@@ -90,6 +95,7 @@ Before doing any work, read [RULES.md](RULES.md). It contains the development st
 | Kusto Query Assistant | `kusto_app/` | Built -- blocked by Azure auth |
 | Workplace Documentation | `workplace_docs/` | Built -- async event loop issue on AI features |
 | Communication at Microsoft | `communication_microsoft/` | Foundation -- EEO comms guidance, meeting frameworks |
+| Polyclaw (Autonomous Agent) | `polyclaw/` | Study -- autonomous Copilot SDK agent, memory, scheduler, voice |
 
 ## Learning Path
 
@@ -99,6 +105,7 @@ Before doing any work, read [RULES.md](RULES.md). It contains the development st
 3. Kusto App             -- Apply agents to real data work (Azure Data Explorer)
 4. Workplace Docs        -- Full-stack app with AI analysis, knowledge graphs
 5. Communication         -- Microsoft comms frameworks for data scientists
+6. Polyclaw              -- Autonomous agents, memory, scheduling, voice, guardrails
 ```
 
 ## Technology Stack
