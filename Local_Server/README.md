@@ -6,12 +6,20 @@ A personal home server project built around a refurbished HP Z440 workstation wi
 
 ## Vision
 
-Build a capable, quiet, always-on home server that can:
+Build a capable, quiet, always-on home server that acts as a **personal innovation lab**:
 
 - **Replace cloud services** with self-hosted alternatives (photos, music, storage)
 - **Run ML/AI workloads** locally using the GPU (classification, object detection, LLMs)
-- **Integrate with edge devices** (Raspberry Pi nodes around the house)
+- **Integrate with edge devices** (Raspberry Pi nodes around the house for sensors, cameras, drones, toys)
 - **Serve as a development sandbox** for rapid prototyping of family-oriented projects
+- **Connect to cloud APIs** (OpenAI, HuggingFace Hub) when tasks exceed local GPU capacity
+- **Grow over time** -- new project ideas get a folder, a Docker Compose file, and ship
+
+Three layers working together:
+
+1. **Server (HP Z440 + RTX 3080)** -- always-on Docker host, GPU compute, databases, APIs, ML training
+2. **Edge devices (Raspberry Pis)** -- sensors, cameras, drones, kid toys, anything physical
+3. **Cloud APIs (OpenAI, HuggingFace, etc.)** -- for models too large to run locally or quick experiments
 
 ---
 
@@ -42,6 +50,9 @@ Full hardware details, eBay search strings, and the complete shopping checklist:
 | 3 | [Security Camera](projects/security_camera/) | Camera feed classifier using HuggingFace models (person/animal detection) | Not Started |
 | 4 | [Garden Monitor](projects/garden_monitor/) | Raspberry Pi sensors + server dashboard for garden health | Not Started |
 | 5 | [Home Assistant](projects/home_assistant/) | Central home automation hub integrating all edge devices | Not Started |
+| 6 | [Pi Playground](projects/pi_playground/) | Raspberry Pi toys, games, and gadgets for the kids | Not Started |
+| 7 | [Drone Monitor](projects/drone_monitor/) | Autonomous garden drone with camera + ML classification | Not Started |
+| 8 | [API Projects](projects/api_projects/) | OpenAI / HuggingFace API-powered apps (chatbots, tools, automations) | Not Started |
 
 ---
 
@@ -66,16 +77,17 @@ Full hardware details, eBay search strings, and the complete shopping checklist:
                     |  - Portainer (mgmt)        |
                     |  - InfluxDB + Grafana      |
                     |  - Ollama (local LLM)      |
+                    |  - OpenAI API relay        |
                     +-------------+--------------+
                                   |
                         LAN / Wi-Fi (192.168.x.x)
                                   |
-            +----------+----------+----------+
-            |          |          |          |
-         +--+--+   +--+--+   +--+--+   +--+--+
-         | Pi  |   | Pi  |   | Pi  |   |Phone |
-         |Gard.|   |Cam1 |   |Cam2 |   |/ TV  |
-         +-----+   +-----+   +-----+   +------+
+     +-------+-------+-------+-------+-------+
+     |       |       |       |       |       |
+  +--+--+ +--+--+ +--+--+ +--+--+ +--+--+ +--+--+
+  | Pi  | | Pi  | | Pi  | |Drone| |Phone| | Kids|
+  |Gard.| |Cam1 | |Cam2 | |Cam  | |/ TV | | Toys|
+  +-----+ +-----+ +-----+ +-----+ +-----+ +-----+
 ```
 
 ---
@@ -91,6 +103,7 @@ Full hardware details, eBay search strings, and the complete shopping checklist:
 | Monitoring | Portainer + Grafana + InfluxDB |
 | Edge Devices | Raspberry Pi (4/5) with Raspberry Pi OS |
 | ML Frameworks | PyTorch, HuggingFace Transformers, ONNX Runtime |
+| Cloud APIs | OpenAI (GPT, Whisper, DALL-E), HuggingFace Inference API |
 | Communication | MQTT (Mosquitto) for Pi-to-server messaging |
 
 ---
@@ -109,12 +122,16 @@ Local_Server/
 |   +-- security_camera/      # Frigate + HuggingFace classifiers
 |   +-- garden_monitor/       # Pi sensors + InfluxDB + Grafana
 |   +-- home_assistant/       # Home automation hub
+|   +-- pi_playground/        # Raspberry Pi toys and games for kids
+|   +-- drone_monitor/        # Autonomous garden drone with camera
+|   +-- api_projects/         # OpenAI / HuggingFace API-powered apps
 +-- docker/
 |   +-- README.md             # Docker Compose strategy and templates
 +-- network/
 |   +-- README.md             # Network topology, Pi integration
 +-- research/
     +-- hardware_research.md  # Original Perplexity research notes
+    +-- perplexity_raw.md     # Full Perplexity conversation (unedited)
 ```
 
 ---
