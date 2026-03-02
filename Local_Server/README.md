@@ -37,7 +37,8 @@ Three layers working together:
 | Extras | Ethernet cables, surge protector, thermal paste | ~$20-30 |
 | **Total** | | **~$900-1,000** |
 
-Full hardware details, eBay search strings, and the complete shopping checklist: [HARDWARE.md](HARDWARE.md)
+Full hardware details and pre-purchase checklists: [HARDWARE.md](HARDWARE.md)
+Prioritized $1,000 budget with Pi hardware included: [SHOPPING_LIST.md](SHOPPING_LIST.md)
 
 ---
 
@@ -115,7 +116,8 @@ Local_Server/
 +-- README.md                 # This file
 +-- OVERVIEW.md               # How it all works (start here if new)
 +-- DEV_WORKFLOW.md           # How to develop with VS Code + AI agents
-+-- HARDWARE.md               # Shopping list, specs, eBay search tips
++-- SHOPPING_LIST.md          # Prioritized $1,000 budget (server + Pi)
++-- HARDWARE.md               # Detailed specs, eBay search tips
 +-- SERVER_SETUP.md           # Ubuntu install, Docker, CUDA setup
 +-- projects/
 |   +-- README.md             # All projects overview
@@ -141,7 +143,7 @@ Local_Server/
 ## Getting Started
 
 1. **Read the overview** -- [OVERVIEW.md](OVERVIEW.md) explains how everything fits together
-2. **Buy the hardware** -- follow the checklist in [HARDWARE.md](HARDWARE.md)
+2. **Buy the hardware** -- follow the prioritized budget in [SHOPPING_LIST.md](SHOPPING_LIST.md)
 3. **Set up the server** -- follow [SERVER_SETUP.md](SERVER_SETUP.md) for Ubuntu + Docker + CUDA
 4. **Set up your dev workflow** -- follow [DEV_WORKFLOW.md](DEV_WORKFLOW.md) for VS Code Remote SSH + AI agents
 5. **Pick a project** -- start with the one that excites you most from [projects/](projects/)
