@@ -113,6 +113,7 @@ Full hardware details, eBay search strings, and the complete shopping checklist:
 ```
 Local_Server/
 +-- README.md                 # This file
++-- OVERVIEW.md               # How it all works (start here if new)
 +-- HARDWARE.md               # Shopping list, specs, eBay search tips
 +-- SERVER_SETUP.md           # Ubuntu install, Docker, CUDA setup
 +-- projects/
@@ -138,10 +139,11 @@ Local_Server/
 
 ## Getting Started
 
-1. **Buy the hardware** -- follow the checklist in [HARDWARE.md](HARDWARE.md)
-2. **Set up the server** -- follow [SERVER_SETUP.md](SERVER_SETUP.md) for Ubuntu + Docker + CUDA
-3. **Pick a project** -- start with the one that excites you most from [projects/](projects/)
-4. **Vibe code it** -- use AI agents (GitHub Copilot, Claude, etc.) to build fast
+1. **Read the overview** -- [OVERVIEW.md](OVERVIEW.md) explains how everything fits together
+2. **Buy the hardware** -- follow the checklist in [HARDWARE.md](HARDWARE.md)
+3. **Set up the server** -- follow [SERVER_SETUP.md](SERVER_SETUP.md) for Ubuntu + Docker + CUDA
+4. **Pick a project** -- start with the one that excites you most from [projects/](projects/)
+5. **Vibe code it** -- use AI agents (GitHub Copilot, Claude, etc.) to build fast
 
 ---
 
