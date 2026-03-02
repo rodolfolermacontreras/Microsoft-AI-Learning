@@ -190,6 +190,7 @@ Local_Server/
 |-- HARDWARE.md                      Shopping list + eBay search strings
 |-- SERVER_SETUP.md                  Step-by-step: Ubuntu, GPU drivers, Docker
 |-- OVERVIEW.md                      This file (how it all works)
+|-- DEV_WORKFLOW.md                  How to develop with VS Code + AI agents
 |
 |-- projects/
 |   |-- README.md                    All 8 projects at a glance
@@ -226,8 +227,7 @@ Each project README contains:
 | 2 | Assemble: GPU, SSD, fans into Z440 | 1-2 hours |
 | 3 | Install Ubuntu 24.04 Server | 30 minutes |
 | 4 | Install NVIDIA drivers + CUDA | 30 minutes |
-| 5 | Install Docker + NVIDIA Container Toolkit | 15 minutes |
-| 6 | Deploy Portainer (container management UI) | 5 minutes |
+| 5 | Install Docker + NVIDIA Container Toolkit | 15 minutes || 4 | Set up your dev workflow | [DEV_WORKFLOW.md](DEV_WORKFLOW.md) | 30 minutes || 6 | Deploy Portainer (container management UI) | 5 minutes |
 | 7 | Deploy your first project (pick one!) | 30-60 minutes |
 | 8 | Set up first Raspberry Pi | 1-2 hours |
 | 9 | Connect Pi to server via MQTT | 30 minutes |
