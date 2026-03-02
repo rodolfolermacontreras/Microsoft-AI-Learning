@@ -59,36 +59,109 @@ Prioritized $1,000 budget with Pi hardware included: [SHOPPING_LIST.md](SHOPPING
 
 ## Architecture Overview
 
+```mermaid
+graph TB
+    subgraph CLOUD["Cloud APIs"]
+        OAI["OpenAI<br/>GPT / Whisper / DALL-E"]
+        HF["HuggingFace<br/>Inference API"]
+    end
+
+    subgraph SERVER["HP Z440 Server -- Ubuntu 24.04 LTS"]
+        direction TB
+        subgraph INFRA["Infrastructure Layer"]
+            DOCKER["Docker Engine"]
+            NVIDIA["NVIDIA Container Toolkit<br/>CUDA + RTX 3080"]
+            PORTAINER["Portainer<br/>Container Mgmt"]
+            MQTT["Mosquitto<br/>MQTT Broker"]
+            PROXY["Nginx Proxy Manager<br/>Reverse Proxy"]
+        end
+
+        subgraph SERVICES["Application Services"]
+            IMMICH["Immich<br/>Photo Server"]
+            NAVIDROME["Navidrome<br/>Music Streaming"]
+            DEMUCS["Demucs<br/>Karaoke / Audio Sep."]
+            FRIGATE["Frigate<br/>Camera NVR + AI"]
+            HA["Home Assistant<br/>Automation Hub"]
+            INFLUX["InfluxDB + Grafana<br/>Dashboards"]
+            OLLAMA["Ollama<br/>Local LLM"]
+            FASTAPI["FastAPI<br/>Custom APIs"]
+        end
+    end
+
+    subgraph LAN["Home LAN -- Wi-Fi / Ethernet"]
+        direction LR
+        subgraph EDGE["Raspberry Pi Edge Nodes"]
+            PI_GARDEN["Pi: Garden<br/>DHT22 + Soil Sensor"]
+            PI_CAM["Pi: Security<br/>Camera Feeds"]
+            PI_ROVER["Pi: Rover<br/>Camera + Motors"]
+            PI_TOYS["Pi: Kids Toys<br/>RC Car + LEDs"]
+        end
+        PHONE["Phone / Tablet<br/>Web UI Access"]
+        LAPTOP["Windows Laptop<br/>VS Code Remote SSH"]
+    end
+
+    LAPTOP -- "SSH + Dev" --> SERVER
+    PHONE -- "HTTP / Web UI" --> PROXY
+    PI_GARDEN -- "MQTT: sensor data" --> MQTT
+    PI_CAM -- "RTSP: video stream" --> FRIGATE
+    PI_ROVER -- "MQTT: photos" --> MQTT
+    PI_TOYS -- "MQTT: commands" --> MQTT
+    MQTT -- "sensor data" --> INFLUX
+    MQTT -- "events" --> HA
+    FASTAPI -- "API calls" --> OAI
+    FASTAPI -- "model inference" --> HF
+    OLLAMA -- "local fallback" --> FASTAPI
+    NVIDIA -- "GPU acceleration" --> IMMICH
+    NVIDIA -- "GPU acceleration" --> FRIGATE
+    NVIDIA -- "GPU acceleration" --> DEMUCS
+    NVIDIA -- "GPU acceleration" --> OLLAMA
+
+    style CLOUD fill:#e8f4f8,stroke:#4a90d9,color:#000
+    style SERVER fill:#f0f0e8,stroke:#8b8b00,color:#000
+    style INFRA fill:#e8e8f0,stroke:#6a6aaa,color:#000
+    style SERVICES fill:#e8f0e8,stroke:#6aaa6a,color:#000
+    style LAN fill:#f8f0e8,stroke:#aa8a5a,color:#000
+    style EDGE fill:#f0e8e8,stroke:#aa6a6a,color:#000
 ```
-                    +----------------------------+
-                    |     HP Z440 Server         |
-                    |     Ubuntu 24.04 LTS       |
-                    |                            |
-                    |  +--------+ +-----------+  |
-                    |  | Docker | | NVIDIA    |  |
-                    |  | Engine | | Container |  |
-                    |  |        | | Toolkit   |  |
-                    |  +--------+ +-----------+  |
-                    |                            |
-                    |  Services:                 |
-                    |  - Immich (photos)         |
-                    |  - Navidrome (music)       |
-                    |  - Frigate (cameras)       |
-                    |  - Home Assistant          |
-                    |  - Portainer (mgmt)        |
-                    |  - InfluxDB + Grafana      |
-                    |  - Ollama (local LLM)      |
-                    |  - OpenAI API relay        |
-                    +-------------+--------------+
-                                  |
-                        LAN / Wi-Fi (192.168.x.x)
-                                  |
-     +-------+-------+-------+-------+-------+
-     |       |       |       |       |       |
-  +--+--+ +--+--+ +--+--+ +--+--+ +--+--+ +--+--+
-  | Pi  | | Pi  | | Pi  | |Drone| |Phone| | Kids|
-  |Gard.| |Cam1 | |Cam2 | |Cam  | |/ TV | | Toys|
-  +-----+ +-----+ +-----+ +-----+ +-----+ +-----+
+
+### Data Flow Summary
+
+```mermaid
+flowchart LR
+    A["Sensor / Camera<br/>(Raspberry Pi)"] -->|MQTT / RTSP| B["Server Services<br/>(Docker on Z440)"]
+    B -->|GPU inference| C["ML Models<br/>(RTX 3080)"]
+    C -->|results| D["Dashboards + Alerts<br/>(Grafana / HA)"]
+    D -->|notifications| E["Phone / Laptop"]
+    B -->|overflow tasks| F["Cloud APIs<br/>(OpenAI / HF)"]
+    F -->|responses| B
+
+    style A fill:#ffe0e0,stroke:#cc6666,color:#000
+    style B fill:#e0ffe0,stroke:#66cc66,color:#000
+    style C fill:#e0e0ff,stroke:#6666cc,color:#000
+    style D fill:#fff0e0,stroke:#ccaa66,color:#000
+    style E fill:#f0e0ff,stroke:#aa66cc,color:#000
+    style F fill:#e0ffff,stroke:#66cccc,color:#000
+```
+
+### Development Workflow
+
+```mermaid
+flowchart TB
+    DEV["Windows Laptop<br/>VS Code + Copilot"] -->|"SSH tunnel"| SRV["HP Z440 Server"]
+    SRV --> CODE["Write Code<br/>(AI agents: Copilot, Claude, Polyclaw)"]
+    CODE --> TEST["Test in Docker<br/>containers"]
+    TEST --> DEPLOY["docker compose up -d"]
+    DEPLOY --> LIVE["Service Running<br/>24/7"]
+    DEV -->|"Voice commands"| MIC["Microphone<br/>Whisper STT"]
+    MIC --> SRV
+
+    style DEV fill:#e0e8ff,stroke:#4466cc,color:#000
+    style SRV fill:#e8ffe0,stroke:#44aa44,color:#000
+    style CODE fill:#ffe8e0,stroke:#cc6644,color:#000
+    style TEST fill:#fff8e0,stroke:#ccaa44,color:#000
+    style DEPLOY fill:#e0fff8,stroke:#44ccaa,color:#000
+    style LIVE fill:#e8e0ff,stroke:#8844cc,color:#000
+    style MIC fill:#ffe0f0,stroke:#cc4488,color:#000
 ```
 
 ---
