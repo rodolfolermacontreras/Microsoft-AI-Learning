@@ -1,0 +1,135 @@
+# ============================================================
+# Data Science Stack -- Docker Compose
+# ============================================================
+# Services:
+#   - jupyter   : Jupyter Lab (port 8888)
+#   - postgres  : PostgreSQL 16 (port 5432)
+#   - pgadmin   : pgAdmin 4 web UI (port 5050)
+#
+# Usage:
+#   1. Copy .env.example to .env and set your passwords
+#   2. docker compose up -d
+#   3. docker compose logs -f  (to see Jupyter token URL)
+#   4. docker compose down     (to stop)
+# ============================================================
+
+services:
+
+  # ----------------------------------------------------------
+  # Jupyter Lab
+  # ----------------------------------------------------------
+  jupyter:
+    image: jupyter/datascience-notebook:python-3.11
+    container_name: ds-stack-jupyter
+
+    ports:
+      - "8888:8888"
+
+    volumes:
+      # Persist notebooks on your host
+      - ./notebooks:/home/jovyan/work
+      # Allow Jupyter to see a data folder (optional)
+      # - ./data:/home/jovyan/data:ro
+
+    environment:
+      # Set a fixed token so you don't have to look it up (dev only)
+      JUPYTER_TOKEN: ${JUPYTER_TOKEN:-changeme}
+      CHOWN_HOME: "yes"
+
+    # Install psycopg2 for PostgreSQL connectivity at startup
+    command: >
+      bash -c "pip install psycopg2-binary sqlalchemy redis --quiet &&
+               start-notebook.sh"
+
+    networks:
+      - ds-network
+
+    # Wait for postgres to be healthy before starting jupyter
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    restart: unless-stopped
+
+  # ----------------------------------------------------------
+  # PostgreSQL
+  # ----------------------------------------------------------
+  postgres:
+    image: postgres:16-alpine
+    container_name: ds-stack-postgres
+
+    ports:
+      # Expose to host for direct connections (e.g., from DBeaver)
+      - "5432:5432"
+
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-dsuser}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-dspassword}
+      POSTGRES_DB: ${POSTGRES_DB:-dsdb}
+      # Performance tuning for a dev workstation
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=en_US.UTF-8"
+
+    volumes:
+      # Named volume: data persists across container restarts
+      - postgres-data:/var/lib/postgresql/data
+      # Run init SQL on first start (creates sample tables)
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-dsuser} -d ${POSTGRES_DB:-dsdb}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+
+    networks:
+      - ds-network
+
+    restart: unless-stopped
+
+  # ----------------------------------------------------------
+  # pgAdmin 4 (PostgreSQL GUI)
+  # ----------------------------------------------------------
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: ds-stack-pgadmin
+
+    ports:
+      - "5050:80"
+
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@ds.local}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: "False"    # Single-user mode for dev
+
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+    networks:
+      - ds-network
+
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+    restart: unless-stopped
+
+# ============================================================
+# Networks
+# ============================================================
+# Custom bridge network so services can reference each other
+# by name: "postgres", "jupyter", "pgadmin"
+networks:
+  ds-network:
+    driver: bridge
+
+# ============================================================
+# Volumes
+# ============================================================
+# Named volumes: managed by Docker, persist across container
+# restarts and `docker compose down` (but NOT `docker compose down -v`)
+volumes:
+  postgres-data:
+    name: ds-stack-postgres-data
+  pgadmin-data:
+    name: ds-stack-pgadmin-data

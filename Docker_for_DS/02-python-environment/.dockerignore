@@ -1,0 +1,75 @@
+# Files and directories to exclude from the Docker build context.
+# These are NOT copied into the image when you run `docker build`.
+#
+# Benefits:
+#   - Faster builds (smaller context sent to Docker daemon)
+#   - Smaller images (no unnecessary files)
+#   - Security (prevents secrets from leaking into images)
+
+# Python artifacts
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+
+# Virtual environments (CRITICAL: never copy .venv into image)
+.venv/
+venv/
+env/
+.env/
+
+# Secrets and configuration (NEVER put in Docker image)
+.env
+*.env
+secrets/
+*.key
+*.pem
+*.pfx
+
+# Jupyter notebooks checkpoints
+.ipynb_checkpoints/
+*.ipynb
+
+# Data files (mount at runtime instead of baking into image)
+data/
+*.csv
+*.parquet
+*.xlsx
+*.pkl
+*.h5
+*.hdf5
+
+# Model files (same -- mount or download at runtime)
+models/
+*.pt
+*.pth
+*.joblib
+*.onnx
+
+# Version control
+.git/
+.gitignore
+.gitattributes
+
+# IDE and OS files
+.vscode/
+.idea/
+*.DS_Store
+Thumbs.db
+
+# Test artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Logs
+*.log
+logs/
+
+# Documentation
+docs/
+*.md

@@ -1,7 +1,7 @@
 <!-- gitnexus:start -->
 # GitNexus MCP
 
-This project is indexed by GitNexus as **Copilot** (9356 symbols, 23057 relationships, 300 execution flows).
+This project is indexed by GitNexus as **Copilot** (9353 symbols, 23058 relationships, 300 execution flows).
 
 ## Always Start Here
 

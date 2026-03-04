@@ -1,0 +1,58 @@
+# ============================================================
+# Docker Compose for Jupyter Lab
+# ============================================================
+# Usage:
+#   docker compose up          -- start in foreground (see logs + token URL)
+#   docker compose up -d       -- start in background
+#   docker compose logs -f     -- follow logs (find the token URL here)
+#   docker compose down        -- stop and remove container
+#
+# The token URL looks like:
+#   http://127.0.0.1:8888/lab?token=<long-string>
+# ============================================================
+
+services:
+  jupyter:
+    # Option A: Build from local Dockerfile (custom image)
+    build: .
+
+    # Option B: Use official image directly (comment out 'build' above)
+    # image: jupyter/datascience-notebook:python-3.11
+
+    container_name: ds-jupyter
+
+    ports:
+      # host_port:container_port
+      # Access Jupyter at http://localhost:8888
+      - "8888:8888"
+
+    volumes:
+      # Mount your local notebooks folder into Jupyter's work directory.
+      # CRITICAL: this makes notebooks persist after the container stops.
+      # ./notebooks (relative) = same directory as this docker-compose.yml
+      - ./notebooks:/home/jovyan/work
+
+      # Optional: mount a data folder (read-only for safety)
+      # - ./data:/home/jovyan/data:ro
+
+    environment:
+      # Optional: set a fixed token instead of random one
+      # JUPYTER_TOKEN: mypassword
+      # Or disable token entirely (dev only, never in production):
+      # JUPYTER_TOKEN: ""
+      # JUPYTER_ENABLE_LAB: "yes"  # default in newer versions, but explicit is good
+
+      # Fix: auto-fix permissions on the work directory
+      CHOWN_HOME: "yes"
+      CHOWN_HOME_OPTS: "--from=root"
+
+    # Resource limits (optional, remove if you need more)
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+        reservations:
+          memory: 1G
+
+    # Restart policy: don't auto-restart (dev environment)
+    restart: "no"
