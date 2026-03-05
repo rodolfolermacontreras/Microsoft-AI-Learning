@@ -1,0 +1,25 @@
+{
+  "servers": {
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp"
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "@microsoft/mcp-server-playwright"]
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-filesystem"],
+      "sandboxEnabled": true,
+      "sandbox": {
+        "filesystem": {
+          "allowWrite": ["${workspaceFolder}"]
+        },
+        "network": {
+          "allowedDomains": []
+        }
+      }
+    }
+  }
+}

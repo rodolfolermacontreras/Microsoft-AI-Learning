@@ -1,0 +1,27 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "type": "command",
+        "command": "python3 ./scripts/block-dangerous-commands.py",
+        "windows": "python ./scripts/block-dangerous-commands.py",
+        "timeout": 5
+      }
+    ],
+    "PostToolUse": [
+      {
+        "type": "command",
+        "command": "npx prettier --write \"$TOOL_INPUT_FILE_PATH\"",
+        "windows": "npx prettier --write \"%TOOL_INPUT_FILE_PATH%\"",
+        "timeout": 15
+      }
+    ],
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"SessionStart\",\"additionalContext\":\"Project uses TypeScript strict mode. Run tests with: npm test\"}}'",
+        "timeout": 5
+      }
+    ]
+  }
+}

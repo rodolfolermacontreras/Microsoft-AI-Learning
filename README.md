@@ -58,6 +58,16 @@ Microsoft-AI-Learning/
 |   |-- OVERVIEW.md                # 730-line analysis: architecture, patterns, all 13 plugins
 |   +-- claude-code-repo/          # Cloned anthropics/claude-code source
 |
+|-- Microsoft-VS-Code/             # VS Code agents and subagents learning hub
+|   |-- README.md                  # Overview, learning path, navigation
+|   |-- 01-core-concepts/          # Agent loop, tools, context, models
+|   |-- 02-agent-types/            # Local, background, cloud, third-party agents
+|   |-- 03-subagents/              # Delegation, orchestration patterns (coordinator-worker, TDD)
+|   |-- 04-customization/          # Custom agents, instructions, prompts, skills, hooks, MCP, plugins
+|   |-- 05-memory-and-sessions/    # Memory scopes, session management, compaction
+|   |-- 06-examples/               # Working .agent.md, .prompt.md, SKILL.md, hooks, mcp.json
+|   +-- 07-reference/              # Cheatsheet with all commands and settings
+|
 |-- microsoft-agent-framework/     # Microsoft Agent Framework (RC) learning
 |   |-- README.md                  # Framework overview, getting started
 |   |-- notes/                     # Architecture docs, migration guides
@@ -161,6 +171,7 @@ Before doing any work, read [RULES.md](RULES.md). It contains the development st
 | Communication at Microsoft | `communication_microsoft/` | Foundation -- EEO comms guidance, meeting frameworks |
 | Polyclaw (Autonomous Agent) | `polyclaw/` | Study -- 800-line architecture deep-dive |
 | Claude Code | `Claude-Code/` | Complete -- 730-line overview: subagents, worktrees, 13 plugins, multi-agent patterns |
+| VS Code Agents | `Microsoft-VS-Code/` | Complete -- 25 files: agent types, subagents, orchestration patterns, customization, examples |
 
 ---
 
@@ -176,6 +187,7 @@ Before doing any work, read [RULES.md](RULES.md). It contains the development st
 5. Agent Framework         -- Microsoft's unified agent platform (SK + AutoGen)
 6. Polyclaw                -- Autonomous agents, memory, scheduling, voice
 7. Claude Code             -- Subagents, worktrees, multi-agent teams, plugin system
+8. VS Code Agents          -- Agent types, subagents, orchestration, custom agents, handoffs
 ```
 
 ### Path B: Infrastructure and Tooling
