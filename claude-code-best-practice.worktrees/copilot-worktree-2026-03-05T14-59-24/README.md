@@ -1,0 +1,190 @@
+# claude-code-best-practice
+practice makes claude perfect
+
+<a href="https://github.com/shanraisshan/claude-code-best-practice/stargazers">
+  <img src="https://img.shields.io/github/stars/shanraisshan/claude-code-best-practice?style=social" alt="GitHub Stars">
+</a>
+
+<p align="center">
+  <img src="!/claude-jumping.svg" alt="Claude Code mascot jumping" width="120" height="100">
+</p>
+
+<table align="center">
+  <tr>
+    <td><img src="!/boris-cherny.png" alt="Claude Code Creator" width="100%"></td>
+    <td><img src="!/boris-cherny-2.png" alt="Claude Code Creator" width="100%"></td>
+  </tr>
+</table>
+
+
+## CONCEPTS
+
+> **Note:** Custom slash commands have been merged into skills. Files in `.claude/commands/` still work, but skills (`.claude/skills/`) are recommended as they support additional features like supporting files, invocation control, and subagent execution.
+
+- **[Skills](https://code.claude.com/docs/en/skills)** - Reusable knowledge, workflows, and slash commands that Claude can load on-demand or you invoke with `/skill-name`
+- **[Agents](https://code.claude.com/docs/en/sub-agents)** - Custom agents in `.claude/agents/` with their own name, color, tools, permissions, and model — usable as default main agent (`"agent"` in settings.json) or as isolated subagents via the Task tool
+- **[Memory](https://code.claude.com/docs/en/memory)** - Persistent context via CLAUDE.md files and `@path` imports that Claude sees every session
+- **[Rules](https://code.claude.com/docs/en/memory#modular-rules-with-clauderules)** - Modular topic-specific instructions in `.claude/rules/*.md` with optional path-scoping via frontmatter
+- **[Hooks](https://code.claude.com/docs/en/hooks)** - Deterministic scripts that run outside the agentic loop on specific events
+- **[MCP Servers](https://code.claude.com/docs/en/mcp)** - Model Context Protocol connections to external tools, databases, and APIs
+- **[Plugins](https://code.claude.com/docs/en/plugins)** - Distributable packages that bundle skills, subagents, hooks, and MCP servers
+- **[Marketplaces](https://code.claude.com/docs/en/discover-plugins)** - Host and discover plugin collections
+- **[Sandbox](https://code.claude.com/docs/en/sandbox)** - File and network isolation runtime that improves safety while reducing permission prompts
+- **[Output Styles](https://code.claude.com/docs/en/output-styles)** - Configurable response tone and format — Explanatory, Learning, or Custom
+- **[Settings](https://code.claude.com/docs/en/settings)** - Hierarchical configuration system for Claude Code behavior (37 settings, 84 env vars)
+- **[Permissions](https://code.claude.com/docs/en/iam)** - Fine-grained access control for tools and operations with wildcard syntax
+
+**Extension Overview:** See [Extend Claude Code](https://code.claude.com/docs/en/features-overview) for when to use each feature and how they layer together.
+
+## MY EXPERIENCE
+
+■ **Workflows**
+- Claude.md should not exceed 150+ lines. (still not 100% guaranteed)
+- use commands for your workflows instead of agents
+- have feature specific subagents (extra context) with skills (progressive disclosure) instead of general qa, backend engineer.
+- /memory, /rules, constitution.md does not guarantee anything
+- do manual /compact at max 50%
+- always start with plan mode
+- subtasks should be so small that it can be completed in less than 50% context
+- vanilla cc is better than any workflows with smaller tasks
+- commit often, as soon as task is completed, commit.
+
+■ **Utilities**
+- iTerm terminal instead of IDE (crash issue) 
+- Wispr Flow for voice prompting (10x productivity)
+- claude-code-voice-hooks for claude feedback
+- status line for context awareness and fast compacting
+- git worktrees for parallel development
+- /permissions with wildcard syntax (`Bash(npm run *)`, `Edit(/docs/**)`) instead of dangerously-skip-permissions
+- /sandbox to reduce permission prompts with file and network isolation
+- output styles: use Explanatory when learning a new codebase, Learning for coaching
+- /keybindings to remap any key, settings live reload
+
+■ **Debugging** 
+- /doctor
+- always ask claude to run the terminal (you want to see logs of) as a background task for better debugging
+- use mcp (claude in chrome, playwright, chrome dev tool) to let claude see chrome console logs on its own
+- provide screenshots of the issue
+
+## TIPS FROM BORIS CHERNY (CREATOR OF CLAUDE CODE)
+- [Feb 2026 - 12 Tips](reports/claude-boris-tips-feb-26.md) ([Reddit thread](https://www.reddit.com/r/ClaudeAI/comments/1r2m8ma/12_claude_code_tips_from_creator_of_claude_code/))
+
+## CONTEXT ENGINEERING
+- [Humanlayer - Writing a good Claude.md](https://www.humanlayer.dev/blog/writing-a-good-claude-md)
+- [Claude.md for larger monorepos - Boris Cherny on X](https://github.com/shanraisshan/claude-code-best-practice/blob/main/reports/claude-md-for-larger-mono-repos.md)
+
+## WORKFLOWS
+- [RPI](workflow/rpi/rpi-workflow.md)
+- [Boris Feb26 workflow](https://x.com/bcherny/status/2017742741636321619)
+- [Ralph plugin with sandbox](https://www.youtube.com/watch?v=eAtvoGlpeRU)
+- [Human Layer RPI - Research Plan Implement](https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md)
+- [AgentOs - 2026 its overkill (Brian Casel)](https://www.youtube.com/watch?v=0hdFJA-ho3c)
+- [Github Speckit](https://github.com/github/spec-kit)
+- [GSD - Get Shit Done](https://github.com/glittercowboy/get-shit-done)
+- [OpenSpec OPSX](https://github.com/Fission-AI/OpenSpec/blob/main/docs/opsx.md)
+- [Superpower](https://github.com/obra/superpowers)
+- [Andrej Karpathy Workflow](https://github.com/forrestchang/andrej-karpathy-skills)
+- [Creator of Clawd Bot Workflow](https://www.youtube.com/watch?v=8lF7HmQ_RgY)
+
+
+
+
+
+## CLAUDE CODE FEATURES INSPIRATION
+
+- [Claude Code Tasks - inspired by beats](https://www.reddit.com/r/ClaudeAI/comments/1qkjznp/anthropic_replaced_claude_codes_old_todos_with/) [Inspiration](https://github.com/steveyegge/beads)
+- [Ralph Plugin](https://x.com/GeoffreyHuntley/status/2015031262692753449)
+
+## COMMAND + SKILL + SUBAGENT ARCHITECTURE
+
+<p align="center">
+  <img src="!/command-skill-agent-flow.svg" alt="Command Skill Agent Architecture Flow" width="600">
+</p>
+
+| Component | Role | Example |
+|-----------|------|---------|
+| **Command** | Entry point, user interaction | `/weather-orchestrator` |
+| **Agent** | Orchestrates workflow with preloaded skills | `weather` agent |
+| **Skills** | Domain knowledge injected at startup | `weather-fetcher`, `weather-transformer` |
+
+**When to use:** Multi-step workflows • Domain-specific knowledge injection • Sequential tasks • Reusable components
+
+**Why it works:** Progressive disclosure • Single execution context • Clean separation • Reusability
+
+See [weather-orchestration-architecture](weather-orchestration/weather-orchestration-architecture.md) for implementation details.
+
+## AI TERMS
+
+| | | | | |
+|---|---|---|---|---|
+| Agentic Engineering | AI Slop | Context Bloat | Context Engineering | Context Rot |
+| Dumb Zone | Hallucination | Scaffolding | Orchestration | Vibe Coding |
+
+[**See Complete List →**](https://github.com/shanraisshan/claude-code-codex-cursor-gemini/blob/main/reports/ai-terms.md)
+
+## CLI STARTUP FLAGS
+
+| | | | | |
+|---|---|---|---|---|
+| `--dangerously-skip-permissions` | `--model` | `--print` | `--resume` | `--continue` |
+| `--system-prompt` | `--verbose` | `--debug` | `--init` | `--max-turns` |
+
+[**See Complete List →**](reports/claude-cli-startup-flags.md)
+
+## CLAUDE COMMANDS
+
+| | | | | |
+|---|---|---|---|---|
+| `/compact` | `/context` | `/model` | `/plan` | `/config` |
+| `/clear` | `/cost` | `/memory` | `/doctor` | `/rewind` |
+
+[**See Complete List →**](reports/live/agent-command-skills/claude-commands.md)
+
+
+## CLAUDE SETTINGS
+
+| | |
+|---|---|
+| [**Claude Settings**](reports/live/claude-settings.md) | [**Global vs Project Settings**](reports/claude-global-vs-project-settings.md) |
+
+
+## MCP SERVERS FOR DAILY USE
+
+> *"Went overboard with 15 MCP servers thinking more = better. Ended up using only 4 daily."* — [r/mcp](https://reddit.com/r/mcp/comments/1mj0fxs/) (682 upvotes)
+
+| MCP Server | What It Does | Resources |
+|------------|-------------|-----------|
+| [**Context7**](https://github.com/upstash/context7) | Fetches up-to-date library docs into context. Prevents hallucinated APIs from outdated training data | [Reddit: "by far the best MCP for coding"](https://reddit.com/r/mcp/comments/1qarjqm/) · [npm](https://www.npmjs.com/package/@upstash/context7-mcp) |
+| [**Playwright**](https://github.com/microsoft/playwright-mcp) | Browser automation — implement, test, and verify UI features autonomously. Screenshots, navigation, form testing | [Reddit: essential for frontend](https://reddit.com/r/mcp/comments/1m59pk0/) · [Docs](https://playwright.dev/) |
+| [**Claude in Chrome**](https://github.com/nicobailon/claude-code-in-chrome-mcp) | Connects Claude to your real Chrome browser — inspect console, network, DOM. Debug what users actually see | [Reddit: "game changer" for debugging](https://reddit.com/r/mcp/comments/1qarjqm/5_mcps_that_have_genuinely_made_me_10x_faster/nza0i7t/) · [Comparison Report](reports/claude-in-chrome-v-chrome-devtools-mcp.md) |
+| [**DeepWiki**](https://github.com/devanshusemwal/deepwiki-mcp) | Fetches structured wiki-style documentation for any GitHub repo — architecture, API surface, relationships | [Reddit: "put it behind a gateway with Context7"](https://reddit.com/r/mcp/comments/1qarjqm/) |
+| [**Excalidraw**](https://github.com/antonpk1/excalidraw-mcp-app) | Generate architecture diagrams, flowcharts, and system designs as hand-drawn Excalidraw sketches from prompts | [GitHub](https://github.com/antonpk1/excalidraw-mcp-app) |
+
+Research (Context7/DeepWiki) -> Debug (Playwright/Chrome) -> Document (Excalidraw)
+
+## REPORTS
+
+### Live Reports
+> Reports that are frequently updated as Claude Code evolves.
+
+| Report | Description |
+|--------|-------------|
+| [Claude Code Commands Reference](reports/live/agent-command-skills/claude-commands.md) | Complete reference of all slash commands, keyboard shortcuts, and input modes |
+| [Claude Code Settings Reference](reports/live/claude-settings.md) | Comprehensive guide to all `settings.json` configuration options |
+| [Agents Frontmatter Reference](reports/live/agent-command-skills/claude-agents-frontmatter.md) | Complete reference of all agent (`.claude/agents/`) frontmatter fields |
+| [Commands Frontmatter Reference](reports/live/agent-command-skills/claude-commands-frontmatter.md) | Complete reference of all command (`.claude/commands/`) frontmatter fields |
+| [Skills Frontmatter Reference](reports/live/agent-command-skills/claude-skills-frontmatter.md) | Complete reference of all skill (`.claude/skills/`) frontmatter fields |
+
+### Reports
+
+| Report | Description |
+|--------|-------------|
+| [Agent SDK vs CLI System Prompts](reports/claude-agent-sdk-vs-cli-system-prompts.md) | Why Claude CLI and Agent SDK outputs may differ—system prompt architecture and determinism |
+| [Browser Automation MCP Comparison](reports/claude-in-chrome-v-chrome-devtools-mcp.md) | Comparison of Playwright, Chrome DevTools, and Claude in Chrome for automated testing |
+| [Claude Code CLI Startup Flags](reports/claude-cli-startup-flags.md) | Complete reference of all CLI flags, subcommands, and environment variables |
+| [CLAUDE.md Loading in Monorepos](reports/claude-md-for-larger-mono-repos.md) | Understanding ancestor vs descendant loading behavior for CLAUDE.md files |
+| [Global vs Project Settings](reports/claude-global-vs-project-settings.md) | Which features are global-only (`~/.claude/`) vs dual-scope, including Tasks and Agent Teams |
+| [Skills Discovery in Monorepos](reports/claude-skills-for-larger-mono-repos.md) | How skills are discovered and loaded in large monorepo projects |
+| [Agent Memory Frontmatter](reports/claude-agent-memory.md) | Persistent memory scopes (`user`, `project`, `local`) for subagents — enabling agents to learn across sessions |
+| [Boris Cherny's 12 Customization Tips](reports/claude-boris-tips-feb-26.md) | 12 ways to customize Claude Code — from terminal config to plugins, agents, hooks, and output styles |
+| [Advanced Tool Use Patterns](reports/claude-advanced-tool-use.md) | Programmatic Tool Calling (PTC), Tool Search, and Tool Use Examples |
