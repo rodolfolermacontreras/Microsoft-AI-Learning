@@ -54,6 +54,10 @@ Microsoft-AI-Learning/
 |   |-- COMPREHENSIVE-GUIDE.md     # 1,500-line deep-dive: agents, skills, MCP, plugins
 |   +-- awesome-copilot-repo/      # Cloned awesome-copilot source (gitignored)
 |
+|-- Claude-Code/                   # Claude Code deep-dive (subagents, worktrees, plugins)
+|   |-- OVERVIEW.md                # 730-line analysis: architecture, patterns, all 13 plugins
+|   +-- claude-code-repo/          # Cloned anthropics/claude-code source
+|
 |-- microsoft-agent-framework/     # Microsoft Agent Framework (RC) learning
 |   |-- README.md                  # Framework overview, getting started
 |   |-- notes/                     # Architecture docs, migration guides
@@ -109,6 +113,7 @@ These are cloned reference repositories excluded from git tracking. Clone separa
 | `polyclaw/polyclaw-repo/` | [aymenfurter/polyclaw](https://github.com/aymenfurter/polyclaw) | Autonomous AI Copilot built on Copilot SDK |
 | `GitNexus/` | [nicobailon/gitnexus](https://github.com/nicobailon/gitnexus) | Codebase knowledge graph (KuzuDB + Tree-sitter) |
 | `awesome-copilot/` | [nicobailon/awesome-copilot](https://github.com/nicobailon/awesome-copilot) | GitHub Copilot customization catalog |
+| `Claude-Code/claude-code-repo/` | [anthropics/claude-code](https://github.com/anthropics/claude-code) | Official Claude Code plugins, commands, hooks, examples |
 
 ### Tooling
 
@@ -155,6 +160,7 @@ Before doing any work, read [RULES.md](RULES.md). It contains the development st
 | Workplace Documentation | `workplace_docs/` | Built -- async event loop issue on AI features |
 | Communication at Microsoft | `communication_microsoft/` | Foundation -- EEO comms guidance, meeting frameworks |
 | Polyclaw (Autonomous Agent) | `polyclaw/` | Study -- 800-line architecture deep-dive |
+| Claude Code | `Claude-Code/` | Complete -- 730-line overview: subagents, worktrees, 13 plugins, multi-agent patterns |
 
 ---
 
@@ -169,6 +175,7 @@ Before doing any work, read [RULES.md](RULES.md). It contains the development st
 4. Migration Guide         -- Convert Python agents to the Copilot framework
 5. Agent Framework         -- Microsoft's unified agent platform (SK + AutoGen)
 6. Polyclaw                -- Autonomous agents, memory, scheduling, voice
+7. Claude Code             -- Subagents, worktrees, multi-agent teams, plugin system
 ```
 
 ### Path B: Infrastructure and Tooling
@@ -201,7 +208,7 @@ Before doing any work, read [RULES.md](RULES.md). It contains the development st
 | Containers | Docker, Docker Compose |
 | Knowledge Graph | GitNexus (KuzuDB, Tree-sitter, MCP) |
 | Environment | Windows 11, VS Code, PowerShell |
-| Agent Tools | Claude Code, GitHub Copilot |
+| Agent Tools | Claude Code (subagents, worktrees, plugins), GitHub Copilot |
 | Infra (planned) | HP Z440 + RTX 3080, Raspberry Pi |
 
 ## Environment Variables
@@ -221,4 +228,4 @@ This is a personal learning repo, but follows professional standards. See [RULES
 
 ---
 
-*Last updated: March 2026*
+*Last updated: July 2025*
