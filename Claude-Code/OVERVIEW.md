@@ -1,7 +1,7 @@
 # Claude Code -- Comprehensive Overview
 
 > Reference document for the [anthropics/claude-code](https://github.com/anthropics/claude-code) repository.
-> Last updated: 2025-07-27
+> Last updated: 2026-03-05
 
 ---
 
@@ -20,7 +20,7 @@
 11. [Commands System](#11-commands-system)
 12. [Memory and Context Management](#12-memory-and-context-management)
 13. [Settings and Security](#13-settings-and-security)
-14. [SDK and Headless Mode](#14-sdk-and-headless-mode)
+14. [SDK and Headless Mode](#14-sdk-and-headless-mode) -- includes cross-terminal agent communication
 15. [Multi-Agent Design Patterns](#15-multi-agent-design-patterns)
 16. [Practical Examples from the Repo](#16-practical-examples-from-the-repo)
 17. [Pros and Cons](#17-pros-and-cons)
@@ -898,7 +898,103 @@ const results = await Promise.all(tasks);
 ### Remote Control (since v2.1.51)
 
 `claude remote-control` allows one Claude Code instance to control another, enabling
-programmatic orchestration of Claude sessions.
+programmatic orchestration of Claude sessions. This is the primary mechanism for
+**cross-terminal agent communication** -- answering the question: "can one Claude session
+talk to a Claude agent running in another terminal?"
+
+```bash
+# Terminal A: start a Claude session and expose it for remote control
+claude --expose-control-socket
+
+# Terminal B: connect to the running session and send it a message
+claude remote-control --socket /tmp/claude-control.sock \
+  --message "Summarize what you have done so far and await further instructions"
+```
+
+Key behaviors:
+- The target session receives the message as if typed by the user
+- Responses stream back to the calling process
+- Useful for coordinating long-running autonomous sessions
+- Combine with `--resume` to reconnect to a previously started session
+
+#### Cross-Terminal Communication Patterns
+
+When two Claude Code instances need to share information or coordinate, four patterns
+are available depending on the use case:
+
+**Pattern A: Remote Control (direct message passing)**
+
+Best when one session is the "controller" and the other is the "worker".
+
+```bash
+# Worker terminal (Terminal A)
+claude --expose-control-socket /tmp/my-agent.sock
+
+# Controller terminal (Terminal B) - send a task and read the output
+claude remote-control --socket /tmp/my-agent.sock \
+  --message "Implement the login endpoint per the spec in docs/auth-spec.md"
+```
+
+**Pattern B: Shared Files (filesystem-based IPC)**
+
+Best for loose coupling where sessions don't need to run simultaneously.
+
+```bash
+# Agent A writes findings to a shared file
+echo "Auth module analysis complete. Recommend JWT with RS256." \
+  > .claude/agent-memory/auth-findings.md
+
+# Agent B (different terminal) reads the shared file
+cat .claude/agent-memory/auth-findings.md
+```
+
+Inside a Claude session you can instruct the agent:
+```
+Write your findings to .claude/agent-memory/task-status.md so the other session can read them.
+```
+
+**Pattern C: Agent Teams (experimental coordinated sessions)**
+
+Best when a lead agent needs to actively manage multiple parallel worker sessions.
+
+```bash
+export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1
+claude  # Lead session spawns teammates automatically
+```
+
+Each teammate gets its own worktree and context. The lead agent communicates via
+`TeammateIdle` and `TaskCompleted` hook events.
+
+**Pattern D: MCP Server as Communication Bridge**
+
+Best for structured inter-agent APIs where agents exchange typed messages.
+
+One Claude session runs an MCP server that the other connects to:
+
+```json
+{
+  "mcpServers": {
+    "agent-bridge": {
+      "command": "python",
+      "args": ["bridge_server.py"],
+      "transport": "stdio"
+    }
+  }
+}
+```
+
+The bridge server exposes tools (`post_message`, `read_messages`) that both agents use
+to exchange structured data.
+
+#### Choosing a Cross-Terminal Pattern
+
+| Scenario | Best Pattern |
+|----------|-------------|
+| One session controls another in real time | Remote Control |
+| Agents work independently and share results | Shared Files |
+| Lead agent actively manages parallel workers | Agent Teams |
+| Structured typed messages between sessions | MCP Bridge |
+| Resume a previous session from a new terminal | `claude --resume` |
 
 ---
 

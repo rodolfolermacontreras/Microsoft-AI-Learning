@@ -55,7 +55,8 @@ Microsoft-AI-Learning/
 |   +-- awesome-copilot-repo/      # Cloned awesome-copilot source (gitignored)
 |
 |-- Claude-Code/                   # Claude Code deep-dive (subagents, worktrees, plugins)
-|   |-- OVERVIEW.md                # 730-line analysis: architecture, patterns, all 13 plugins
+|   |-- OVERVIEW.md                # Comprehensive reference: architecture, patterns, all 13 plugins, cross-terminal communication
+|   |-- cross-terminal-communication.md  # How to make two Claude sessions communicate
 |   +-- claude-code-repo/          # Cloned anthropics/claude-code source
 |
 |-- Microsoft-VS-Code/             # VS Code agents and subagents learning hub
@@ -170,7 +171,7 @@ Before doing any work, read [RULES.md](RULES.md). It contains the development st
 | Workplace Documentation | `workplace_docs/` | Built -- async event loop issue on AI features |
 | Communication at Microsoft | `communication_microsoft/` | Foundation -- EEO comms guidance, meeting frameworks |
 | Polyclaw (Autonomous Agent) | `polyclaw/` | Study -- 800-line architecture deep-dive |
-| Claude Code | `Claude-Code/` | Complete -- 730-line overview: subagents, worktrees, 13 plugins, multi-agent patterns |
+| Claude Code | `Claude-Code/` | Complete -- overview, subagents, worktrees, 13 plugins, multi-agent patterns, cross-terminal communication |
 | VS Code Agents | `Microsoft-VS-Code/` | Complete -- 25 files: agent types, subagents, orchestration patterns, customization, examples |
 
 ---
